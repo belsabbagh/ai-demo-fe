@@ -1,47 +1,38 @@
-# Svelte + Vite
+# AI Model Demo Frontend
 
-This template should help get you started developing with Svelte in Vite.
+This is a template for a frontend application that can be used to demonstrate an AI model. It is based on [Create Vite App](https://vitejs.dev/guide/#scaffolding-your-first-vite-project).
 
-## Recommended IDE Setup
+## Getting Started
 
-[VS Code](https://code.visualstudio.com/) + [Svelte](https://marketplace.visualstudio.com/items?itemName=svelte.svelte-vscode).
+Clone this repository and install the dependencies:
 
-## Need an official Svelte framework?
-
-Check out [SvelteKit](https://github.com/sveltejs/kit#readme), which is also powered by Vite. Deploy anywhere with its serverless-first approach and adapt to various platforms, with out of the box support for TypeScript, SCSS, and Less, and easily-added support for mdsvex, GraphQL, PostCSS, Tailwind CSS, and more.
-
-## Technical considerations
-
-**Why use this over SvelteKit?**
-
-- It brings its own routing solution which might not be preferable for some users.
-- It is first and foremost a framework that just happens to use Vite under the hood, not a Vite app.
-
-This template contains as little as possible to get started with Vite + Svelte, while taking into account the developer experience with regards to HMR and intellisense. It demonstrates capabilities on par with the other `create-vite` templates and is a good starting point for beginners dipping their toes into a Vite + Svelte project.
-
-Should you later need the extended capabilities and extensibility provided by SvelteKit, the template has been structured similarly to SvelteKit so that it is easy to migrate.
-
-**Why `global.d.ts` instead of `compilerOptions.types` inside `jsconfig.json` or `tsconfig.json`?**
-
-Setting `compilerOptions.types` shuts out all other types not explicitly listed in the configuration. Using triple-slash references keeps the default TypeScript setting of accepting type information from the entire workspace, while also adding `svelte` and `vite/client` type information.
-
-**Why include `.vscode/extensions.json`?**
-
-Other templates indirectly recommend extensions via the README, but this file allows VS Code to prompt the user to install the recommended extension upon opening the project.
-
-**Why enable `checkJs` in the JS template?**
-
-It is likely that most cases of changing variable types in runtime are likely to be accidental, rather than deliberate. This provides advanced typechecking out of the box. Should you like to take advantage of the dynamically-typed nature of JavaScript, it is trivial to change the configuration.
-
-**Why is HMR not preserving my local component state?**
-
-HMR state preservation comes with a number of gotchas! It has been disabled by default in both `svelte-hmr` and `@sveltejs/vite-plugin-svelte` due to its often surprising behavior. You can read the details [here](https://github.com/sveltejs/svelte-hmr/tree/master/packages/svelte-hmr#preservation-of-local-state).
-
-If you have state that's important to retain within a component, consider creating an external store which would not be replaced by HMR.
-
-```js
-// store.js
-// An extremely simple external store
-import { writable } from 'svelte/store'
-export default writable(0)
+```bash
+npm install
 ```
+
+## Running the App
+
+To run the app, run:
+
+```bash
+npm run dev
+```
+
+## Structure
+### Backend
+The `server.py` file is a simple Flask server that creates a simple `/predict` endpoint that can be used to make predictions. 
+
+In that file, there is a `mk_predict` function that should return a reference to the prediction function of the model that you will be demonstrating. The function takes a path to the file or directory that contains the data that will be used to load the model and build the prediction function.
+
+Then, there are functions to validate input data and make error messages just in case you need more than the default error messages.
+
+There is also a `preprocess_request` function that can be used to preprocess the request data before it is passed to the prediction function. This is useful if you need to do some preprocessing before making a prediction.
+
+Finally, there is a `format_prediction` function that takes the prediction and builds the response dict that will be returned to the frontend.
+
+After these, the endpoint is defined to make use of all these functions to handle prediction requests.
+
+### Frontend
+The `src/App.svelte` file contains the frontend code that makes a request to the `/predict`.
+
+The `predict` function is the function that makes the request to the `/predict` endpoint. It takes the data that will be used to make the prediction and returns a promise that resolves to the prediction.
