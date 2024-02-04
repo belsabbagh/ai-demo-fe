@@ -12,17 +12,21 @@
         return JSON.stringify(data);
     }
 
-    async function predict(event) {
-        const formData = new FormData(event.target);
-        const body = { text: formData.get("text") };
-        const request = {
-            body: JSON.stringify(body),
+    function buildRequest(formData) {
+      //TODO: Change this to return the request object that will be sent to the server.
+      return {
+            body: "",
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
                 "Access-Control-Allow-Origin": "*",
             },
         };
+    }
+
+    async function predict(event) {
+        const formData = new FormData(event.target);
+        const request = buildRequest(formData);
         const response = await fetch(AI_API_URL, request);
         const data = await response.json();
         if (!response.ok) {
@@ -38,7 +42,9 @@
 <main>
     <h1>{TITLE}</h1>
     <div class="error">{$errorStore}</div>
-    <NlpForm handleSubmit={predict} />
+    <form method="post" on:submit|preventDefault={handleSubmit}>
+        TODO: Write the input form here.
+    </form>
     <div class="results">
         <h2>Result: {$resultsStore}</h2>
     </div>

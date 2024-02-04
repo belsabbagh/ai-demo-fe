@@ -25,7 +25,7 @@ predict = mk_predict(MODEL_PATH)
 
 def is_valid_request(data):
     # TODO: add validation
-    return data["text"] not in ["test error", ""]
+    return True
 
 
 def make_error(data):
